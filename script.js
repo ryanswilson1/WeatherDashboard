@@ -122,4 +122,72 @@ function getForecast(city) {
     });
 }
 
+function retrieveWeather(city) {
+
+    var queryUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + apiKey;
+    $.ajax({
+        url: queryUrl,
+        method: "GET"
+    })
+        .then(function (response) {
+            city = response.name;
+            localStorage.setItem("Recents", JSON.stringify(city));
+
+            var name = localStorage.getItem("cityName");
+            var cityName = [];
+            if (name) {
+                cityName = JSON.parse(name);
+            }
+
+            var found = cityName.find(function (element) {
+                console.log
+                return (element === city);
+            });
+
+            if (!found) {
+                cityName.push(city);
+
+
+                list(city);
+
+            }
+
+            currentForecast(response);
+            getForecast(city);
+        });
+}
+
+$(document).ready(function () {
+
+    $(document).on("click", ".queryCities", function () {
+        var cityClick = $(this).text();
+
+        var queryUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityClick + apiKey;
+
+        $.ajax({
+            url: queryUrl,
+            method: "GET"
+        })
+            .then(function (response) {
+
+                currentForecast(response);
+                getForecast(cityClick);
+            });
+    });
+
+
+    $("#searchBtn").on("click", function (event) {
+        event.preventDefault();
+        var city = $("#searchTerm").val();
+
+        $("#searchTerm").val("");
+
+        retrieveWeather(city);
+    });
+
+    queryCities();
+
+});
+
+
 
