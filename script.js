@@ -45,3 +45,39 @@ function currentForecast(response) {
     var uvId = $('<p>').addClass('uvId');
     var latitude = response.coord.lat;
     var longitutde = response.coord.lon;
+
+    function getuvId() {
+        var uvUrl =
+            'https://api.openweathermap.org/data/2.5/uvi?lat=' + latitude + '&longitutde=' + longitutde + apiKey;
+        $.ajax({
+            url: uvUrl,
+            method: 'GET'
+        }).then(function (response) {
+
+            var uvClass = $(".uvId");
+            var uvi = response.value;
+            var uvSpan = "<span id='uvi'>" + uvi + "</span>";
+            uvClass.append("<p> UV Index:   " + uvSpan);
+
+            if (uvi < 3) {
+                $("#uvi").attr("style", "background-color: green;");
+            } else if (uvi < 6) {
+                $("#uvi").attr("style", "background-color: yellow; color: black;");
+            } else if (uvi < 8) {
+                $("#uvi").attr("style", "background-color: orange; color: black;");
+            } else if (uvi < 11) {
+                $("#uvi").attr("style", "background-color: red;");
+            } else if (11 <= uvi) {
+                $("#uvi").attr("style", "background-color: purple;");
+            }
+        });
+    }
+
+    getuvId();
+
+    city.append(image);
+    cardBody.append(city, temperature, humidity, wind, uvId);
+    card.append(cardBody);
+    $("#currentCity").append(card);
+}
+
