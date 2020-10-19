@@ -34,3 +34,14 @@ function currentForecast(response) {
     tempF = Math.floor(tempF);
 
     $('#currentCity').empty();
+
+    var card = $("<div>").addClass("card");
+    var cardBody = $("<div>").addClass("card-body");
+    var city = $("<h4>").addClass("card-title").text(response.name + " " + date.toLocaleDateString('en-US'));
+    var temperature = $("<p>").addClass("card-text").text("Temperature: " + tempF + " °F");
+    var humidity = $("<p>").addClass("card-text").text("Humidity: " + response.main.humidity + "%");
+    var wind = $("<p>").addClass("card-text").text("Wind Speed: " + response.wind.speed + " MPH");
+    var image = $("<img>").attr("src", "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png");
+    var uvId = $('<p>').addClass('uvId');
+    var latitude = response.coord.lat;
+    var longitutde = response.coord.lon;
