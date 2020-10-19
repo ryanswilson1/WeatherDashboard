@@ -81,3 +81,45 @@ function currentForecast(response) {
     $("#currentCity").append(card);
 }
 
+function getForecast(city) {
+    $("#dailyForecast").show();
+    $.ajax({
+        url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city + apiKey,
+        method: "GET"
+    }).then(function (response) {
+
+        $('#forecast').empty();
+
+
+        var results = response.list;
+
+
+        for (var i = 0; i < results.length; i++) {
+            var month = results[i].dt_txt.split('-')[1].split(' ')[0];
+            var day = results[i].dt_txt.split('-')[2].split(' ')[0];
+
+
+            if (results[i].dt_txt.indexOf("12:00:00") !== -1) {
+
+
+                var fahrenheit = (results[i].main.temp - 273.15) * 1.80 + 32;
+                var temp = Math.floor(fahrenheit);
+
+
+                var card = $("<div>").addClass("card col-xl-2 col-lg-3 mt-2 ml-2 mr-2 bg-primary text-white");
+                var cardBody = $("<div>").addClass("card-body p-3");
+                var cityDate = $("<h6>").addClass("card-title").text(month + "/" + day + "/" + year);
+                var temperature = $("<p>").addClass("card-text").text("Temperature: " + temp + " °F");
+                var humidity = $("<p>").addClass("card-text").text("Humidity: " + results[i].main.humidity + "%");
+                var image = $("<img>").attr("src", "https://openweathermap.org/img/w/" + results[i].weather[0].icon + ".png");
+
+                cardBody.append(cityDate, image, temperature, humidity);
+                card.append(cardBody);
+                $("#forecast").append(card);
+
+            }
+        }
+    });
+}
+
+
