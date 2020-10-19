@@ -19,3 +19,13 @@ function list(city, i) {
 
     $(".list").prepend(cityItem);
 }
+function queryCities() {
+    if (cityName !== null) {
+        $(".list").empty();
+        for (var i = 0; i < cityName.length; i++) {
+            list(cityName[i], i);
+        }
+        city = cityName[Recents];
+        retrieveWeather(city);
+    }
+}
