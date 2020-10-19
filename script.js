@@ -29,3 +29,8 @@ function queryCities() {
         retrieveWeather(city);
     }
 }
+function currentForecast(response) {
+    var tempF = (response.main.temp - 273.15) * 1.80 + 32;
+    tempF = Math.floor(tempF);
+
+    $('#currentCity').empty();
