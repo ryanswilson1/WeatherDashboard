@@ -12,3 +12,10 @@ $("#searchTerm").keypress(function (event) {
         $("#searchBtn").click();
     }
 });
+
+function list(city, i) {
+    var cityItem = $("<button>").addClass("list-group-item list-group-item-action queryCities");
+    cityItem.text(city);
+
+    $(".list").prepend(cityItem);
+}
