@@ -1,0 +1,15 @@
+
+main {
+    margin-bottom: 80px;
+  }
+  .footer {
+    margin-top: 4%;
+    height: 60px;
+    line-height: 60px;
+  }
+  
+  span{
+    color: white;
+    font-size: larger;
+    padding: 5px;
+  }
